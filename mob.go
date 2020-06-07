@@ -188,16 +188,7 @@ func startTimer(timerInMinutes string) {
 
 func reset() {
 	git("fetch", remoteName)
-	if isMobProgramming() {
-		sayError("you are mob programming")
-		sayEmptyLine()
-		sayTodo("fix with 'git checkout " + baseBranch + " && mob reset'")
-		return
-	}
-	resetMobSessionLocalAndRemoteBranch()
-}
-
-func resetMobSessionLocalAndRemoteBranch() {
+	git("checkout", baseBranch)
 	if hasMobProgrammingBranch() {
 		git("branch", "--delete", "--force", wipBranch)
 	}
