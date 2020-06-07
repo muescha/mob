@@ -302,7 +302,7 @@ func mobNext() {
 		sayInfo("nothing to commit")
 		return
 	}
-	
+
 	git("add", "--all")
 	git("commit", "--message", "\""+wipCommitMessage+"\"", "--no-verify")
 	changes := getChangesOfLastCommit()

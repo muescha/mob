@@ -283,38 +283,6 @@ func TestBothCreateEmptyCommitWithNext(t *testing.T) {
 	assertCommits(t, 3)
 }
 
-func TestBothCreateNonemptyCommitWithNext(t *testing.T) {
-	setDefaults()
-	captureOutput()
-	createTestbed(t)
-
-	workingDir = "/tmp/mob/local"
-	start()
-	createFile(t, "file1.txt", "asdf")
-
-	workingDir = "/tmp/mob/localother"
-	start()
-	createFile(t, "file2.txt", "asdf")
-
-	workingDir = "/tmp/mob/local"
-	next()
-
-	workingDir = "/tmp/mob/localother"
-	next()
-	git("pull")
-	git("push")
-
-	workingDir = "/tmp/mob/local"
-	start()
-	assertFileExist(t, "file1.txt")
-	assertFileExist(t, "file2.txt")
-
-	workingDir = "/tmp/mob/localother"
-	start()
-	assertFileExist(t, "file1.txt")
-	assertFileExist(t, "file2.txt")
-}
-
 func assertCommits(t *testing.T, commits int) {
 	result := silentgit("rev-list", "--count", "HEAD")
 	number, _ := strconv.Atoi(strings.TrimSpace(result))
