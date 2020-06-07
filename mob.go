@@ -298,8 +298,11 @@ func next() {
 }
 
 func mobNext() {
+	if !hasUncommittedChanges() {
+		sayInfo("nothing to commit")
+	}
 	git("add", "--all")
-	git("commit", "--allow-empty", "--message", "\""+wipCommitMessage+"\"", "--no-verify")
+	git("commit", "--message", "\""+wipCommitMessage+"\"", "--no-verify")
 	changes := getChangesOfLastCommit()
 	mergeConflict := gitignorefailure("merge", "--ff-only", remoteName+"/"+wipBranch)
 	if mergeConflict != nil {
